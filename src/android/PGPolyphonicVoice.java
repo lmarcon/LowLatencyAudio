@@ -60,12 +60,18 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 		}
 		if ( !playing && state == PREPARED )
 		{
-			state = PENDING_LOOP;
+			if(loop)
+				state = PENDING_LOOP;
+			else
+				state = PENDING_PLAY;
 			onPrepared( mp );
 		}
 		else if ( !playing )
 		{
-			state = PENDING_LOOP;
+			if(loop)
+				state = PENDING_LOOP;
+			else
+				state = PENDING_PLAY;
 			mp.setLooping(loop);
 			mp.start();
 		}
