@@ -5,7 +5,7 @@ var exec = require('cordova/exec');
 var LowLatencyAudio = {
 
 	getCapabilities : function( success, fail ) {
-		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "getCapabilities", []);
+		return exec(success, fail || this._emptyCallback, "LowLatencyAudio", "getCapabilities", []);
 	},
 
 	preloadFX: function ( id, assetPath, success, fail) {
@@ -41,11 +41,11 @@ var LowLatencyAudio = {
 	},
 
 	getDuration: function(id, success, fail) {
-		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "getDuration", [id]);    
+		return exec(success, fail || this._emptyCallback, "LowLatencyAudio", "getDuration", [id]);    
 	},
 
 	getPosition: function(id, index, success, fail) {
-		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "getPosition", [id, index]);    
+		return exec(success, fail || this._emptyCallback, "LowLatencyAudio", "getPosition", [id, index]);    
 	},
 
 	_emptyCallback: function(){}
