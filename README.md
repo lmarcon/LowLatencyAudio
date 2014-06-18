@@ -90,10 +90,17 @@ You will also need to include the AudioToolbox library in your XCode project. In
 	getPosition: function (id, index, success, fail) 	
 		params: ID - string unique ID for the audio file
 				index - index of a specific audio voice to check
-				success - success callback function - takes an integer that is the position in milliseconds
+				success - success callback function - takes an integer that is the position in milliseconds. For audio that is not paused or playing, -1 is passed.
 				fail - error/fail callback function
 		detail:	
 				Gets the position of an audio voice - this only works for assets loaded via preloadAudio
+
+	getCapabilities: function (success, fail)
+		params: success - success callback function
+				fail - error/fail callback function
+		detail:
+				Gets an object describing capabilities of the device as expected by SoundJS.
+				See http://www.createjs.com/Docs/SoundJS/classes/Sound.html#method_getCapabilities
 
 
 ## License

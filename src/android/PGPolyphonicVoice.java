@@ -133,8 +133,8 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 
 	public int getPosition() throws IOException
 	{
-		if(state == INVALID)
-			return 0;
+		if(state == INVALID || state == STOPPED || state == PREPARED)
+			return -1;
 		else
 			return mp.getCurrentPosition();
 	}

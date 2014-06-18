@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.json.JSONException;
 
 import android.content.res.AssetFileDescriptor;
@@ -37,6 +38,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 	public static final String ERROR_NO_AUDIOID="A reference does not exist for the specified audio id.";
 	public static final String ERROR_AUDIOID_EXISTS="A reference already exists for the specified audio id.";
 	
+	public static final String GET_CAPABILITIES="getCapabilities";
 	public static final String PRELOAD_FX="preloadFX";
 	public static final String PRELOAD_AUDIO="preloadAudio";
 	public static final String PLAY="play";
@@ -81,7 +83,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					int assetIntID = soundPool.load(afd, 1);
 					soundMap.put( audioID , assetIntID );
 					
-					callbackContext.success("OK");
+					callbackContext.success();
 					return true;
 				}
 				else 
@@ -113,7 +115,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					PGLowLatencyAudioAsset asset = new PGLowLatencyAudioAsset( afd, voices );
 					assetMap.put( audioID , asset );
 					
-					callbackContext.success("OK");
+					callbackContext.success();
 					return true;
 				}
 				else 
@@ -153,7 +155,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					streams.add( streamID );
 					streamMap.put( audioID , streams );
 					
-					callbackContext.success("OK");
+					callbackContext.success();
 					return true;
 				}
 				else 
@@ -173,7 +175,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					else
 						asset.stop();
 					
-					callbackContext.success("OK");
+					callbackContext.success();
 					return true;
 				}
 				else if ( soundMap.containsKey(audioID) )
@@ -186,7 +188,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					}
 					streamMap.remove( audioID );
 					
-					callbackContext.success("OK");
+					callbackContext.success();
 					return true;
 				}
 				else 
@@ -204,7 +206,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					asset.unload();
 					assetMap.remove( audioID );
 					
-					callbackContext.success("OK");
+					callbackContext.success();
 					return true;
 				}
 				else if ( soundMap.containsKey(audioID) ){
@@ -213,7 +215,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					soundMap.remove( audioID );
 					soundPool.unload( assetIntID );
 					
-					callbackContext.success("OK");
+					callbackContext.success();
 					return true;
 				}
 				else 
@@ -229,7 +231,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 				{
 					PGLowLatencyAudioAsset asset = assetMap.get(audioID);
 					asset.setVolume(volume);
-					callbackContext.success("OK");
+					callbackContext.success();
 				}
 				else if (soundMap.containsKey(id))
 				{
@@ -239,7 +241,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 						for (int x=0; x < streams.size(); x++)
 							soundPool.setVolume(streams.get(x), volume);
 					}
-					callbackContext.success("OK");      
+					callbackContext.success();      
 				}
 				callbackContext.error(ERROR_NO_AUDIOID);
 			}
@@ -253,7 +255,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 						asset.pause(index);
 					else
 						asset.pause();
-					callbackContext.success("OK");
+					callbackContext.success();
 				}
 			}
 			else if(GET_DURATION.equals(action))
@@ -274,6 +276,22 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					int position = asset.getPosition(index);
 					callbackContext.success(position);
 				}
+			}
+			else if(GET_CAPABILITIES.equals(action))
+			{
+				JSONObject returnVal = new JSONObject();
+				returnVal.put("panning", true);
+				returnVal.put("volume", true);
+				returnVal.put("tracks", -1);
+				returnVal.put("mp3", true);
+				returnVal.put("ogg", true);
+				returnVal.put("wav", true);
+				returnVal.put("mpeg", false);//not sure
+				returnVal.put("mp4", true);
+				returnVal.put("m4a", true);
+				returnVal.put("aiff", false);
+				returnVal.put("wma", false);
+				returnVal.put("mid", true);
 			}
 		} 
 		catch (Exception ex) 
