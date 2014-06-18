@@ -9,6 +9,8 @@ The LowLatencyAudio plugin can be added to your project via the PhoneGap command
 
 `phonegap local plugin add https://github.com/triceam/LowLatencyAudio`
 
+You will also need to include the AudioToolbox library in your XCode project. Instructions for linking frameworks can be found [here](https://developer.apple.com/library/ios/recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html#//apple_ref/doc/uid/TP40010155-CH17-SW1).
+
 ## Usage
 
 1. Preload the audio asset - Note: Make sure to wait for phonegap deviceready event before atteptimpting to load assets
