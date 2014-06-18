@@ -7,7 +7,7 @@ LowLatencyAudio is a native plugin for PhoneGap.  This implementation is designe
 
 The LowLatencyAudio plugin can be added to your project via the PhoneGap command line tools.  Simply use the following command to add this to your project:
 
-`phonegap local plugin add https://github.com/triceam/LowLatencyAudio`
+`phonegap local plugin add https://github.com/CloudKidStudio/LowLatencyAudio`
 
 You will also need to include the AudioToolbox library in your XCode project. Instructions for linking frameworks can be found [here](https://developer.apple.com/library/ios/recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html#//apple_ref/doc/uid/TP40010155-CH17-SW1).
 
@@ -37,20 +37,21 @@ You will also need to include the AudioToolbox library in your XCode project. In
 		
 	play: function (id, success, fail) 	
 		params: ID - string unique ID for the audio file
-				success - success callback function
+				success - success callback function - takes an integer (index of audio that has been played)
 				fail - error/fail callback function
 		detail:	
-				Plays an audio asset
+				Plays an audio asset - the index is only passed to success with assets loaded via preloadAudio
 		
 	loop: function (id, success, fail) 	
 		params: ID - string unique ID for the audio file
-				success - success callback function
+				success - success callback function - takes an integer (index of audio that has been played)
 				fail - error/fail callback function
 		detail:	
 				Loops an audio asset infinitely - this only works for assets loaded via preloadAudio
 		
-	stop: function (id, success, fail) 	
+	stop: function (id, index, success, fail) 	
 		params: ID - string unique ID for the audio file
+				index - index of a specific audio voice to stop - pass -1 or null to stop all voices for the audio file.
 				success - success callback function
 				fail - error/fail callback function
 		detail:	
@@ -62,6 +63,37 @@ You will also need to include the AudioToolbox library in your XCode project. In
 				fail - error/fail callback function
 		detail:	
 				Unloads an audio file from memory
+
+	pause: function (id, index, success, fail) 	
+		params: ID - string unique ID for the audio file
+				index - index of a specific audio voice to pause - pass -1 or null to pause all voices for the audio file.
+				success - success callback function
+				fail - error/fail callback function
+		detail:	
+				Pauses an audio file - this only works for assets loaded via preloadAudio
+
+	setVolume: function (id, volume, success, fail) 	
+		params: ID - string unique ID for the audio file
+				volume - The volume between 0 and 1, inclusive, to set the audio to.
+				success - success callback function
+				fail - error/fail callback function
+		detail:	
+				Sets the volume for an audio file - this only works for assets loaded via preloadAudio
+
+	getDuration: function (id, success, fail) 	
+		params: ID - string unique ID for the audio file
+				success - success callback function - takes an integer that is the duration in milliseconds
+				fail - error/fail callback function
+		detail:	
+				Gets the duration of an audio file - this only works for assets loaded via preloadAudio
+
+	getPosition: function (id, index, success, fail) 	
+		params: ID - string unique ID for the audio file
+				index - index of a specific audio voice to check
+				success - success callback function - takes an integer that is the position in milliseconds
+				fail - error/fail callback function
+		detail:	
+				Gets the position of an audio voice - this only works for assets loaded via preloadAudio
 
 
 ## License
