@@ -24,12 +24,13 @@ import android.media.MediaPlayer.OnPreparedListener;
 public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListener
 {
 
-	private static final int INVALID = 0;
-	private static final int PREPARED = 1;
-	private static final int PENDING_PLAY = 2;
-	private static final int PLAYING = 3;
-	private static final int PENDING_LOOP = 4;
-	private static final int LOOPING = 5;
+	private static final int INVALID = 0;//not loaded
+	private static final int PREPARED = 1;//loaded, never played
+	private static final int PENDING_PLAY = 2;//preparing, need to play once
+	private static final int PLAYING = 3;//playing once
+	private static final int PENDING_LOOP = 4;//preparing, need to loop
+	private static final int LOOPING = 5;//looping
+	private static final int STOPPED = 6;//loaded & played, now stopped
 	
 	private MediaPlayer mp;
 	private int state;
@@ -54,26 +55,40 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 		if ( playing )
 		{
 			mp.pause();
+			if(loop)
+				state = LOOPING;
+			else
+				state = PLAYING;
 			mp.setLooping(loop);
 			mp.seekTo(0);
 			mp.start();
 		}
-		if ( !playing && state == PREPARED )
+		if ( !playing)
 		{
-			if(loop)
-				state = PENDING_LOOP;
-			else
-				state = PENDING_PLAY;
-			onPrepared( mp );
-		}
-		else if ( !playing )
-		{
-			if(loop)
-				state = PENDING_LOOP;
-			else
-				state = PENDING_PLAY;
-			mp.setLooping(loop);
-			mp.start();
+			if(state == PREPARED )
+			{
+				if(loop)
+					state = PENDING_LOOP;
+				else
+					state = PENDING_PLAY;
+				onPrepared( mp );
+			}
+			else if (state == STOPPED)
+			{
+				if(loop)
+					state = LOOPING;
+				else
+					state = PLAYING;
+				mp.setLooping(loop);
+				mp.start();
+			}
+			else if(state == INVALID)
+			{
+				if(loop)
+					state = PENDING_LOOP;
+				else
+					state = PENDING_PLAY;
+			}
 		}
 	}
 	
@@ -81,7 +96,7 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 	{
 		if ( mp.isLooping() || mp.isPlaying() )
 		{
-			state = INVALID;
+			state = STOPPED;
 			mp.pause();
 			mp.seekTo(0);
 		}
@@ -96,6 +111,7 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 	{
 		this.stop();
 		mp.release();
+		state = INVALID;
 	}
 
 	public void setVolume(float volume) throws IOException
@@ -138,7 +154,7 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 	{
 		if (state != LOOPING)
 		{
-			this.state = INVALID;
+			this.state = STOPPED;
 			try {
 				this.stop();
 			}
