@@ -38,12 +38,13 @@ public class PGLowLatencyAudioAsset
 		}
 	}
 	
-	public void play() throws IOException
+	public int play() throws IOException
 	{
 		PGPolyphonicVoice voice = voices.get(playIndex);
 		voice.play();
 		playIndex++;
 		playIndex = playIndex % voices.size();
+		return playIndex;
 	}
 	
 	public void stop() throws IOException
@@ -54,13 +55,23 @@ public class PGLowLatencyAudioAsset
 			voice.stop();
 		}
 	}
+
+	public void stop(int index) throws IOException
+	{
+		if(index >= 0 && index < voices.size())
+		{
+			PGPolyphonicVoice voice = voices.get(index);
+			voice.stop();
+		}
+	}
 	
-	public void loop() throws IOException
+	public int loop() throws IOException
 	{
 		PGPolyphonicVoice voice = voices.get(playIndex);
 		voice.loop();
 		playIndex++;
 		playIndex = playIndex % voices.size();
+		return playIndex;
 	}
 	
 	public void unload() throws IOException
@@ -90,5 +101,30 @@ public class PGLowLatencyAudioAsset
 			PGPolyphonicVoice voice = voices.get(x);
 			voice.pause();
 		}    
+	}
+
+	public void pause(int index) throws IOException
+	{
+		if(index >= 0 && index < voices.size())
+		{
+			PGPolyphonicVoice voice = voices.get(index);
+			voice.pause();
+		}   
+	}
+
+	public int getDuration() throws IOException
+	{
+		PGPolyphonicVoice voice = voices.get(0);
+		return voice.getDuration();
+	}
+
+	public int getPosition(int index) throws IOException
+	{
+		if(index >= 0 && index < voices.size())
+		{
+			PGPolyphonicVoice voice = voices.get(index);
+			return voice.getPosition();
+		}
+		return 0;
 	}
 }

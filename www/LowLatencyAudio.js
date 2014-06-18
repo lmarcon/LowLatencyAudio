@@ -16,8 +16,8 @@ var LowLatencyAudio = {
 		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "play", [id]);
 	},
 
-	stop: function (id, success, fail) {
-		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "stop", [id]);
+	stop: function (id, index, success, fail) {
+		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "stop", [id, index]);
 	},
 
 	loop: function (id, success, fail) {
@@ -32,8 +32,16 @@ var LowLatencyAudio = {
 		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "setVolume", [id, volume]);    
 	},
 
-	pause: function(id, success, fail) {
-		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "pause", [id]);        
+	pause: function(id, index, success, fail) {
+		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "pause", [id, index]);        
+	},
+
+	getDuration: function(id, success, fail) {
+		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "getDuration", [id]);    
+	},
+
+	getPosition: function(id, index, success, fail) {
+		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "getPosition", [id, index]);    
 	},
 
 	_emptyCallback: function(){}

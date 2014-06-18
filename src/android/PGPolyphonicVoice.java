@@ -31,6 +31,7 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 	private static final int PENDING_LOOP = 4;//preparing, need to loop
 	private static final int LOOPING = 5;//looping
 	private static final int STOPPED = 6;//loaded & played, now stopped
+	private static final int PAUSED = 7;//paused during playback
 	
 	private MediaPlayer mp;
 	private int state;
@@ -39,6 +40,8 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 	{
 		state = INVALID;
 		mp = new MediaPlayer();
+		mp.setOnPreparedListener(this);
+		mp.setOnCompletionListener(this);
 		mp.setDataSource( afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
 		mp.setAudioStreamType(AudioManager.STREAM_MUSIC);  
 		mp.prepare();
@@ -73,7 +76,7 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 					state = PENDING_PLAY;
 				onPrepared( mp );
 			}
-			else if (state == STOPPED)
+			else if (state == STOPPED || state == PAUSED)
 			{
 				if(loop)
 					state = LOOPING;
@@ -123,9 +126,26 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 	{
 		if ( mp.isLooping() || mp.isPlaying() )
 		{
+			state = PAUSED;
 			mp.pause();
 		}
-	}	
+	}
+
+	public int getPosition() throws IOException
+	{
+		if(state == INVALID)
+			return 0;
+		else
+			return mp.getCurrentPosition();
+	}
+
+	public int getDuration() throws IOException
+	{
+		if(state == INVALID)
+			return 0;
+		else
+			return mp.getDuration();
+	}
 	
 	public void onPrepared(MediaPlayer mPlayer) 
 	{
