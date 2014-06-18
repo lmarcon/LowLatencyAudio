@@ -35,10 +35,12 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 	
 	private MediaPlayer mp;
 	private int state;
+	private Callback loadCallback;
 	
-	public PGPolyphonicVoice( AssetFileDescriptor afd )  throws IOException
+	public PGPolyphonicVoice( AssetFileDescriptor afd, Callback callback; )  throws IOException
 	{
 		state = INVALID;
+		loadCallback = callback;
 		mp = new MediaPlayer();
 		mp.setOnPreparedListener(this);
 		mp.setOnCompletionListener(this);
@@ -167,6 +169,11 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 		{
 			state = PREPARED;
 			mp.seekTo(0);
+		}
+		if(loadCallback != null)
+		{
+			loadCallback.invoke();
+			loadCallback = null;
 		}
 	}
 	

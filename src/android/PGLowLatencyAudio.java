@@ -112,10 +112,10 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					AssetManager am = cordova.getActivity().getResources().getAssets(); 
 					AssetFileDescriptor afd = am.openFd(fullPath);
 					
-					PGLowLatencyAudioAsset asset = new PGLowLatencyAudioAsset( afd, voices );
+					Callback callback = new Callback(callbackContext, "success");
+					PGLowLatencyAudioAsset asset = new PGLowLatencyAudioAsset( afd, voices, callback);
 					assetMap.put( audioID , asset );
 					
-					callbackContext.success();
 					return true;
 				}
 				else 

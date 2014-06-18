@@ -23,18 +23,35 @@ public class PGLowLatencyAudioAsset
 
 	private ArrayList<PGPolyphonicVoice> voices;
 	private int playIndex = 0;
+
+	private int voicesLoaded = 0;
+	private Callback loadCallback;
 	
-	public PGLowLatencyAudioAsset(AssetFileDescriptor afd, int numVoices) throws IOException
+	public PGLowLatencyAudioAsset(AssetFileDescriptor afd, int numVoices, Callback callback) throws IOException
 	{
 		voices = new ArrayList<PGPolyphonicVoice>();
 		
 		if ( numVoices < 0 )
 			numVoices = 0;
 		
+		loadCallback = callback;
+		Callback voiceCallback = new Callback(this, "onVoiceLoaded");
 		for ( int x=0; x<numVoices; x++) 
 		{
-			PGPolyphonicVoice voice = new PGPolyphonicVoice(afd);
+			PGPolyphonicVoice voice = new PGPolyphonicVoice(afd, voiceCallback);
 			voices.add( voice );
+		}
+	}
+
+	public void onVoiceLoaded()
+	{
+		if(++voicesLoaded >= voices.size())
+		{
+			if(loadCallback != null)
+			{
+				loadCallback.invoke();
+				loadCallback = null;
+			}
 		}
 	}
 	
