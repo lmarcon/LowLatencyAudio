@@ -21,7 +21,8 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 
-public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListener {
+public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListener
+{
 
 	private static final int INVALID = 0;
 	private static final int PREPARED = 1;
@@ -90,6 +91,19 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 		this.stop();
 		mp.release();
 	}
+
+	public void setVolume(float volume) throws IOException
+	{
+		mp.setVolume(volume, volume);
+	}
+
+	public void pause() throws IOException
+	{
+		if ( mp.isLooping() || mp.isPlaying() )
+		{
+			mp.pause();
+		}
+	}	
 	
 	public void onPrepared(MediaPlayer mPlayer) 
 	{

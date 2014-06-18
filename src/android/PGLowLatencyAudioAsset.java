@@ -18,7 +18,8 @@ import java.util.ArrayList;
 
 import android.content.res.AssetFileDescriptor;
 
-public class PGLowLatencyAudioAsset {
+public class PGLowLatencyAudioAsset
+{
 
 	private ArrayList<PGPolyphonicVoice> voices;
 	private int playIndex = 0;
@@ -72,5 +73,22 @@ public class PGLowLatencyAudioAsset {
 		}
 		voices.removeAll(voices);
 	}
+
+	public void setVolume(float volume) throws IOException
+	{
+		for ( int x=0; x<voices.size(); x++) 
+		{
+			PGPolyphonicVoice voice = voices.get(x);
+			voice.setVolume(volume);
+		}    
+	}
 	
+	public void pause() throws IOException
+	{
+		for ( int x=0; x<voices.size(); x++) 
+		{
+			PGPolyphonicVoice voice = voices.get(x);
+			voice.pause();
+		}    
+	}
 }
