@@ -68,8 +68,12 @@ public class PGLowLatencyAudio extends CordovaPlugin
 		
 		try 
 		{
-			String audioID = args.getString(0);
-			Log.d(audioID, action);
+			String audioID = null;
+			if(args.length() > 0)
+			{
+				audioID = args.getString(0);
+				Log.d(audioID, action);
+			}
 	
 			if ( PRELOAD_FX.equals( action ) ) 
 			{
@@ -292,6 +296,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 				returnVal.put("aiff", false);
 				returnVal.put("wma", false);
 				returnVal.put("mid", true);
+				callbackContext.success(returnVal);
 			}
 		} 
 		catch (Exception ex) 
