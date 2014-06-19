@@ -72,7 +72,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 			if(args.length() > 0)
 			{
 				audioID = args.getString(0);
-				Log.d(audioID, action);
+				//Log.d(audioID, action);
 			}
 	
 			if ( PRELOAD_FX.equals( action ) ) 
@@ -119,7 +119,6 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					Callback callback = new Callback(callbackContext, "success");
 					PGLowLatencyAudioAsset asset = new PGLowLatencyAudioAsset( afd, voices, callback);
 					assetMap.put( audioID , asset );
-					
 					return true;
 				}
 				else 
@@ -236,6 +235,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					PGLowLatencyAudioAsset asset = assetMap.get(audioID);
 					asset.setVolume(volume);
 					callbackContext.success();
+					return true;
 				}
 				else if (soundMap.containsKey(id))
 				{
@@ -245,9 +245,11 @@ public class PGLowLatencyAudio extends CordovaPlugin
 						for (int x=0; x < streams.size(); x++)
 							soundPool.setVolume(streams.get(x), volume, volume);
 					}
-					callbackContext.success();      
+					callbackContext.success();
+					return true; 
 				}
 				callbackContext.error(ERROR_NO_AUDIOID);
+				return false;
 			}
 			else if (PAUSE.equals(action))
 			{
@@ -260,7 +262,10 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					else
 						asset.pause();
 					callbackContext.success();
+					return true;
 				}
+				callbackContext.error(ERROR_NO_AUDIOID);
+				return false;
 			}
 			else if(GET_DURATION.equals(action))
 			{
@@ -269,7 +274,10 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					PGLowLatencyAudioAsset asset = assetMap.get(audioID);
 					int duration = asset.getDuration();
 					callbackContext.success(duration);
+					return true;
 				}
+				callbackContext.error(ERROR_NO_AUDIOID);
+				return false;
 			}
 			else if(GET_POSITION.equals(action))
 			{
@@ -279,7 +287,10 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					PGLowLatencyAudioAsset asset = assetMap.get(audioID);
 					int position = asset.getPosition(index);
 					callbackContext.success(position);
+					return true;
 				}
+				callbackContext.error(ERROR_NO_AUDIOID);
+				return false;
 			}
 			else if(GET_CAPABILITIES.equals(action))
 			{
@@ -297,6 +308,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 				returnVal.put("wma", false);
 				returnVal.put("mid", true);
 				callbackContext.success(returnVal);
+				return true;
 			}
 		} 
 		catch (Exception ex) 

@@ -5,50 +5,52 @@ var exec = require('cordova/exec');
 var LowLatencyAudio = {
 
 	getCapabilities : function( success, fail ) {
-		return exec(success, fail || this._emptyCallback, "LowLatencyAudio", "getCapabilities", []);
+		return exec(success, fail || this._emptyError, "LowLatencyAudio", "getCapabilities", []);
 	},
 
 	preloadFX: function ( id, assetPath, success, fail) {
-		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "preloadFX", [id, assetPath]);
+		return exec(success || this._emptyCallback, fail || this._emptyError, "LowLatencyAudio", "preloadFX", [id, assetPath]);
 	},    
 
 	preloadAudio: function ( id, assetPath, voices, success, fail) {
-		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "preloadAudio", [id, assetPath, voices]);
+		return exec(success || this._emptyCallback, fail || this._emptyError, "LowLatencyAudio", "preloadAudio", [id, assetPath, voices]);
 	},
 
 	play: function (id, success, fail) {
-		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "play", [id]);
+		return exec(success || this._emptyCallback, fail || this._emptyError, "LowLatencyAudio", "play", [id]);
 	},
 
 	stop: function (id, index, success, fail) {
-		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "stop", [id, index]);
+		return exec(success || this._emptyCallback, fail || this._emptyError, "LowLatencyAudio", "stop", [id, index]);
 	},
 
 	loop: function (id, success, fail) {
-		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "loop", [id]);
+		return exec(success || this._emptyCallback, fail || this._emptyError, "LowLatencyAudio", "loop", [id]);
 	},
 
 	unload: function (id, success, fail) {
-		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "unload", [id]);
+		return exec(success || this._emptyCallback, fail || this._emptyError, "LowLatencyAudio", "unload", [id]);
 	},
 
 	setVolume: function(id, volume, success, fail) {
-		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "setVolume", [id, volume]);    
+		return exec(success || this._emptyCallback, fail || this._emptyError, "LowLatencyAudio", "setVolume", [id, volume]);    
 	},
 
 	pause: function(id, index, success, fail) {
-		return exec(success || this._emptyCallback, fail || this._emptyCallback, "LowLatencyAudio", "pause", [id, index]);        
+		return exec(success || this._emptyCallback, fail || this._emptyError, "LowLatencyAudio", "pause", [id, index]);        
 	},
 
 	getDuration: function(id, success, fail) {
-		return exec(success, fail || this._emptyCallback, "LowLatencyAudio", "getDuration", [id]);    
+		return exec(success, fail || this._emptyError, "LowLatencyAudio", "getDuration", [id]);    
 	},
 
 	getPosition: function(id, index, success, fail) {
-		return exec(success, fail || this._emptyCallback, "LowLatencyAudio", "getPosition", [id, index]);    
+		return exec(success, fail || this._emptyError, "LowLatencyAudio", "getPosition", [id, index]);    
 	},
 
-	_emptyCallback: function(){}
+	_emptyCallback: function(){},
+
+	_emptyError: function(message){ console.error(message); }
 
 };
 
