@@ -1,11 +1,16 @@
 package com.phonegap;
 
-public class CallBack
+import java.lang.reflect.InvocationTargetException;
+import java.lang.IllegalAccessException;
+import java.lang.NoSuchMethodException;
+import java.lang.reflect.Method;
+
+public class Callback
 {
     private String methodName;
     private Object scope;
 
-    public CallBack(Object scope, String methodName)
+    public Callback(Object scope, String methodName)
     {
         this.methodName = methodName;
         this.scope = scope;

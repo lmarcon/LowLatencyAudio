@@ -14,6 +14,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.phonegap;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.IllegalAccessException;
+import java.lang.NoSuchMethodException;
 
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
@@ -37,7 +40,7 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 	private int state;
 	private Callback loadCallback;
 	
-	public PGPolyphonicVoice( AssetFileDescriptor afd, Callback callback; )  throws IOException
+	public PGPolyphonicVoice( AssetFileDescriptor afd, Callback callback )  throws IOException
 	{
 		state = INVALID;
 		loadCallback = callback;
@@ -149,7 +152,7 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 			return mp.getDuration();
 	}
 	
-	public void onPrepared(MediaPlayer mPlayer) 
+	public void onPrepared(MediaPlayer mPlayer)
 	{
 		if (state == PENDING_PLAY) 
 		{
@@ -172,7 +175,19 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 		}
 		if(loadCallback != null)
 		{
-			loadCallback.invoke();
+			try
+			{
+				loadCallback.invoke();
+			}
+			catch(InvocationTargetException e)
+			{
+			}
+			catch(IllegalAccessException e)
+			{
+			}
+			catch(NoSuchMethodException e)
+			{
+			}
 			loadCallback = null;
 		}
 	}

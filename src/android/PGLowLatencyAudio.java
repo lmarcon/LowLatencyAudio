@@ -226,8 +226,8 @@ public class PGLowLatencyAudio extends CordovaPlugin
 			}
 			else if (SET_VOLUME.equals(action))
 			{
-				float volume = args.getFloat(1);
-				if (assetMap.containsKey(id)
+				float volume = (float)args.getDouble(1);
+				if (assetMap.containsKey(id))
 				{
 					PGLowLatencyAudioAsset asset = assetMap.get(audioID);
 					asset.setVolume(volume);
@@ -239,7 +239,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					if (streams != null)
 					{
 						for (int x=0; x < streams.size(); x++)
-							soundPool.setVolume(streams.get(x), volume);
+							soundPool.setVolume(streams.get(x), volume, volume);
 					}
 					callbackContext.success();      
 				}

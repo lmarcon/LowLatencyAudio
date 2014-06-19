@@ -13,6 +13,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.phonegap;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.IllegalAccessException;
+import java.lang.NoSuchMethodException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -43,7 +46,7 @@ public class PGLowLatencyAudioAsset
 		}
 	}
 
-	public void onVoiceLoaded()
+	public void onVoiceLoaded() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException
 	{
 		if(++voicesLoaded >= voices.size())
 		{
