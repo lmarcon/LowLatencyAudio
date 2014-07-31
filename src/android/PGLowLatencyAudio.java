@@ -35,8 +35,8 @@ import org.apache.cordova.CordovaPlugin;
 public class PGLowLatencyAudio extends CordovaPlugin
 {
 
-	public static final String ERROR_NO_AUDIOID="A reference does not exist for the specified audio id.";
-	public static final String ERROR_AUDIOID_EXISTS="A reference already exists for the specified audio id.";
+	public static final String ERROR_NO_AUDIOID="A reference does not exist for the specified audio id";
+	public static final String ERROR_AUDIOID_EXISTS="A reference already exists for the specified audio id";
 	
 	public static final String GET_CAPABILITIES="getCapabilities";
 	public static final String PRELOAD_FX="preloadFX";
@@ -92,7 +92,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 				}
 				else 
 				{
-					callbackContext.error(ERROR_AUDIOID_EXISTS);
+					callbackContext.error(ERROR_AUDIOID_EXISTS + " (" + action + ") " + audioID);
 					return false;
 				}
 			}
@@ -123,7 +123,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 				}
 				else 
 				{
-					callbackContext.error(ERROR_AUDIOID_EXISTS);
+					callbackContext.error(ERROR_AUDIOID_EXISTS + " (" + action + ") " + audioID);
 					return false;
 				}
 			}
@@ -163,7 +163,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 				}
 				else 
 				{
-					callbackContext.error(ERROR_NO_AUDIOID);
+					callbackContext.error(ERROR_NO_AUDIOID + " (" + action + ") " + audioID);
 					return false;
 				}
 			}
@@ -196,7 +196,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 				}
 				else 
 				{
-					callbackContext.error(ERROR_NO_AUDIOID);
+					callbackContext.error(ERROR_NO_AUDIOID + " (" + action + ") " + audioID);
 					return false;
 				}
 			}
@@ -223,7 +223,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 				}
 				else 
 				{
-					callbackContext.error(ERROR_NO_AUDIOID);
+					callbackContext.error(ERROR_NO_AUDIOID + " (" + action + ") " + audioID);
 					return false;
 				}
 			}
@@ -248,7 +248,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					callbackContext.success();
 					return true; 
 				}
-				callbackContext.error(ERROR_NO_AUDIOID);
+					callbackContext.error(ERROR_NO_AUDIOID + " (" + action + ") " + audioID);
 				return false;
 			}
 			else if (PAUSE.equals(action))
@@ -264,7 +264,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					callbackContext.success();
 					return true;
 				}
-				callbackContext.error(ERROR_NO_AUDIOID);
+					callbackContext.error(ERROR_NO_AUDIOID + " (" + action + ") " + audioID);
 				return false;
 			}
 			else if(GET_DURATION.equals(action))
@@ -276,7 +276,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					callbackContext.success(duration);
 					return true;
 				}
-				callbackContext.error(ERROR_NO_AUDIOID);
+					callbackContext.error(ERROR_NO_AUDIOID + " (" + action + ") " + audioID);
 				return false;
 			}
 			else if(GET_POSITION.equals(action))
@@ -289,7 +289,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					callbackContext.success(position);
 					return true;
 				}
-				callbackContext.error(ERROR_NO_AUDIOID);
+					callbackContext.error(ERROR_NO_AUDIOID + " (" + action + ") " + audioID);
 				return false;
 			}
 			else if(GET_CAPABILITIES.equals(action))
