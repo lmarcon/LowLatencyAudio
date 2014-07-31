@@ -167,7 +167,7 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					return false;
 				}
 			}
-			else if ( STOP.equals( action ) || UNLOAD.equals( action ) ) 
+			else if ( STOP.equals( action )) 
 			{
 				if ( assetMap.containsKey(audioID) )
 				{
@@ -200,12 +200,12 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					return false;
 				}
 			}
-			
-			if ( UNLOAD.equals( action ) ) 
+			else if ( UNLOAD.equals( action ) ) 
 			{
 				if ( assetMap.containsKey(audioID) )
 				{
 					PGLowLatencyAudioAsset asset = assetMap.get( audioID );
+					//assets stop themselves before unloading
 					asset.unload();
 					assetMap.remove( audioID );
 					
@@ -213,7 +213,15 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					return true;
 				}
 				else if ( soundMap.containsKey(audioID) ){
-					//streams unloaded and stopped above
+					//stop and unload stream
+					ArrayList<Integer> streams = streamMap.get( audioID );
+					if ( streams != null )
+					{
+						for ( int x=0; x< streams.size(); x++)
+						soundPool.stop( streams.get(x) );
+					}
+					streamMap.remove( audioID );
+					//unload sound data
 					int assetIntID = soundMap.get( audioID );
 					soundMap.remove( audioID );
 					soundPool.unload( assetIntID );
