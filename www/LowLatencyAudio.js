@@ -32,8 +32,8 @@ var LowLatencyAudio = {
 		return exec(success || this._emptyCallback, fail || this._emptyError, "LowLatencyAudio", "unload", [id]);
 	},
 
-	setVolume: function(id, volume, success, fail) {
-		return exec(success || this._emptyCallback, fail || this._emptyError, "LowLatencyAudio", "setVolume", [id, volume]);    
+	setVolume: function(id, index, volume, success, fail) {
+		return exec(success || this._emptyCallback, fail || this._emptyError, "LowLatencyAudio", "setVolume", [id, index, volume]);    
 	},
 
 	pause: function(id, index, success, fail) {

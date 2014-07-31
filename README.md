@@ -13,7 +13,7 @@ You will also need to include the AudioToolbox library in your XCode project. In
 
 ## Usage
 
-1. Preload the audio asset - Note: Make sure to wait for phonegap deviceready event before atteptimpting to load assets
+1. Preload the audio asset - Note: Make sure to wait for phonegap deviceready event before attempting to load assets
 2. Play the audio asset
 3. When done, unload the audio asset
 
@@ -72,9 +72,10 @@ You will also need to include the AudioToolbox library in your XCode project. In
 		detail:	
 				Pauses an audio file - this only works for assets loaded via preloadAudio
 
-	setVolume: function (id, volume, success, fail) 	
+	setVolume: function (id, index, volume, success, fail) 	
 		params: ID - string unique ID for the audio file
-				volume - The volume between 0 and 1, inclusive, to set the audio to.
+				index - index of a specific audio voice to set the volume on - pass -1 or null to set all voices for the audio file.
+				volume - The volume between 0 and 1, inclusive, to set the volume to.
 				success - success callback function
 				fail - error/fail callback function
 		detail:	

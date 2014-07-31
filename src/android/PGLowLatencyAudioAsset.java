@@ -97,7 +97,7 @@ public class PGLowLatencyAudioAsset
 	public void unload() throws IOException
 	{
 		this.stop();
-		for ( int x=0; x<voices.size(); x++) 
+		for ( int x=0; x<voices.size(); x++)
 		{
 			PGPolyphonicVoice voice = voices.get(x);
 			voice.unload();
@@ -107,11 +107,20 @@ public class PGLowLatencyAudioAsset
 
 	public void setVolume(float volume) throws IOException
 	{
-		for ( int x=0; x<voices.size(); x++) 
+		for ( int x=0; x<voices.size(); x++)
 		{
 			PGPolyphonicVoice voice = voices.get(x);
 			voice.setVolume(volume);
-		}    
+		}
+	}
+
+	public void setVolume(int index, float volume) throws IOException
+	{
+		if(index >= 0 && index < voices.size())
+		{
+			PGPolyphonicVoice voice = voices.get(x);
+			voice.setVolume(volume);
+		}
 	}
 	
 	public void pause() throws IOException
@@ -120,7 +129,7 @@ public class PGLowLatencyAudioAsset
 		{
 			PGPolyphonicVoice voice = voices.get(x);
 			voice.pause();
-		}    
+		}
 	}
 
 	public void pause(int index) throws IOException
@@ -129,7 +138,7 @@ public class PGLowLatencyAudioAsset
 		{
 			PGPolyphonicVoice voice = voices.get(index);
 			voice.pause();
-		}   
+		}
 	}
 
 	public int getDuration() throws IOException

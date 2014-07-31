@@ -229,11 +229,15 @@ public class PGLowLatencyAudio extends CordovaPlugin
 			}
 			else if (SET_VOLUME.equals(action))
 			{
-				float volume = (float)args.getDouble(1);
+				int index = args.optInt(1, -1);//see if we should be setting the volume on a specific index
+				float volume = (float)args.getDouble(2);
 				if (assetMap.containsKey(audioID))
 				{
 					PGLowLatencyAudioAsset asset = assetMap.get(audioID);
-					asset.setVolume(volume);
+					if(index >= 0)
+						asset.setVolume(index, volume);
+					else
+						asset.setVolume(volume);
 					callbackContext.success();
 					return true;
 				}
