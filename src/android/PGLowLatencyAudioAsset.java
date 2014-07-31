@@ -118,7 +118,7 @@ public class PGLowLatencyAudioAsset
 	{
 		if(index >= 0 && index < voices.size())
 		{
-			PGPolyphonicVoice voice = voices.get(x);
+			PGPolyphonicVoice voice = voices.get(index);
 			voice.setVolume(volume);
 		}
 	}
