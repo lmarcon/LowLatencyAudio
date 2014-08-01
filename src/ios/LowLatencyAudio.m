@@ -26,6 +26,7 @@ NSString* ERROR_MISSING_REFERENCE = @"a reference to the audio ID does not exist
 NSString* CONTENT_LOAD_REQUESTED = @"content has been requested";
 NSString* PLAY_REQUESTED = @"PLAY REQUESTED";
 NSString* STOP_REQUESTED = @"STOP REQUESTED";
+NSString* SET_VOLUME_REQUESTED = @"SET VOLUME REQUESTED";
 NSString* UNLOAD_REQUESTED = @"UNLOAD REQUESTED";
 NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
 
@@ -247,6 +248,77 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
         else 
         {
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_MISSING_REFERENCE];        
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
+        }
+    }];
+}
+
+- (void) getPosition:(CDVInvokedUrlCommand*)command;
+{
+    [self.commandDelegate runInBackground:^{
+        CDVPluginResult* pluginResult;
+        NSString* callbackID = command.callbackId;
+        NSString *audioID = [command.arguments objectAtIndex:0];
+
+        if ( audioMapping )
+        {
+            float seconds = -1;
+            NSObject* asset = [audioMapping objectForKey: audioID];
+            if ([asset isKindOfClass:[LowLatencyAudioAsset class]])
+            {
+                LowLatencyAudioAsset *_asset = (LowLatencyAudioAsset*) asset;
+                // Send back as miliseconds to be consistent.
+                // TODO cast to double ?
+                seconds = [_asset getPosition] * 1000;
+            }
+            else if ( [asset isKindOfClass:[NSNumber class]] )
+            {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESTRICTED];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
+            }
+
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt: seconds];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
+        }
+        else
+        {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_MISSING_REFERENCE];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
+        }
+    }];
+}
+
+- (void) setVolume:(CDVInvokedUrlCommand*)command;
+{
+    [self.commandDelegate runInBackground:^{
+        CDVPluginResult* pluginResult;
+        NSString* callbackID = command.callbackId;
+        NSString *audioID = [command.arguments objectAtIndex:0];
+        // TODO allow setting volume per voice which sits in 1 in the index.
+        NSNumber *volume = [command.arguments objectAtIndex:2];
+        Float32 volumeFloat;
+
+        if ( audioMapping )
+        {
+            NSObject* asset = [audioMapping objectForKey: audioID];
+            if ([asset isKindOfClass:[LowLatencyAudioAsset class]])
+            {
+                volumeFloat = [volume floatValue];
+                LowLatencyAudioAsset *_asset = (LowLatencyAudioAsset*) asset;
+                [_asset setVolume:&volumeFloat];
+            }
+            else if ( [asset isKindOfClass:[NSNumber class]] )
+            {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESTRICTED];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
+            }
+
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:SET_VOLUME_REQUESTED];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
+        }
+        else
+        {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_MISSING_REFERENCE];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackID];
         }
     }];

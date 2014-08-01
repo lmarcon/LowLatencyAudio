@@ -75,6 +75,21 @@
 
 - (void) unload 
 {
-    [self stop];}
+    [self stop];
+}
+
+- (float) getPosition
+{
+    AVAudioPlayer * player = [voices objectAtIndex:playIndex];
+    return player.currentTime;
+}
+
+- (void) setVolume:(Float32*)volume
+{
+    // TODO allow setting volume per voice.
+    AVAudioPlayer * player = [voices objectAtIndex:playIndex];
+    [player setVolume:*((volume))];
+}
+
 
 @end

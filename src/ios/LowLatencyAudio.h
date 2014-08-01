@@ -33,6 +33,8 @@
 - (void) stop:(CDVInvokedUrlCommand*)command;
 - (void) loop:(CDVInvokedUrlCommand*)command;
 - (void) unload:(CDVInvokedUrlCommand*)command;
+- (void) getPosition:(CDVInvokedUrlCommand*)command;
+- (void) setVolume:(CDVInvokedUrlCommand*)command;
 
 
 //Instance Methods  
