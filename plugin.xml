@@ -36,6 +36,10 @@
             </feature>
         </config-file>
 
+        <framework src="Foundation.framework"/>
+        <framework src="AVFoundation.framework"/>
+        <framework src="AudioToolbox.framework"/>
+
         <header-file src="src/ios/LowLatencyAudio.h" />
         <source-file src="src/ios/LowLatencyAudio.m" />
         <header-file src="src/ios/LowLatencyAudioAsset.h" />
