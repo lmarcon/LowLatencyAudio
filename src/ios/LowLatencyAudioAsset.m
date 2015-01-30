@@ -46,7 +46,6 @@
 - (void) play
 {
     AVAudioPlayer * player = [voices objectAtIndex:playIndex];
-    [player setCurrentTime:0.0];
     player.numberOfLoops = 0;
     [player play];
     playIndex += 1;
@@ -62,11 +61,19 @@
     }
 }
 
+- (void) pause
+{
+    for (int x = 0; x < [voices count]; x++)
+    {
+        AVAudioPlayer * player = [voices objectAtIndex:x];
+        [player pause];
+    }
+}
+
 - (void) loop
 {
     [self stop];
     AVAudioPlayer * player = [voices objectAtIndex:playIndex];
-    [player setCurrentTime:0.0];
     player.numberOfLoops = -1;
     [player play];
     playIndex += 1;
