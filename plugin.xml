@@ -10,7 +10,7 @@
  
  
     <js-module src="www/LowLatencyAudio.js" name="LowLatencyAudio">
-    	<clobbers target="window.LowLatencyAudio" />
+    	<clobbers target="window.plugins.LowLatencyAudio" />
     </js-module>
  
     <!-- android -->
