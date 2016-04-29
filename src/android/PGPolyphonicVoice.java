@@ -144,6 +144,11 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 			return mp.getCurrentPosition();
 	}
 
+	public void setPosition(int position) throws IOException
+	{
+		mp.seekTo(position);
+	}
+
 	public int getDuration() throws IOException
 	{
 		if(state == INVALID)
@@ -151,7 +156,7 @@ public class PGPolyphonicVoice implements OnPreparedListener, OnCompletionListen
 		else
 			return mp.getDuration();
 	}
-	
+
 	public void onPrepared(MediaPlayer mPlayer)
 	{
 		if (state == PENDING_PLAY) 

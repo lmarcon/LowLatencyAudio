@@ -156,4 +156,14 @@ public class PGLowLatencyAudioAsset
 		}
 		return 0;
 	}
+
+	public int setPosition(int index, int position) throws IOException
+	{
+		if(index >= 0 && index < voices.size())
+		{
+			PGPolyphonicVoice voice = voices.get(index);
+			voice.setPosition(position);
+		}
+		return 0;
+	}
 }

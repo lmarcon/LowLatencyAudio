@@ -48,6 +48,10 @@ var LowLatencyAudio = {
 		return exec(success, fail || this._emptyError, "LowLatencyAudio", "getPosition", [id, index]);    
 	},
 
+	setPosition: function(id, index, position, success, fail) {
+		return exec(success, fail || this._emptyError, "LowLatencyAudio", "setPosition", [id, index, position]);
+	},
+
 	_emptyCallback: function(){},
 
 	_emptyError: function(message){ console.error(message); }

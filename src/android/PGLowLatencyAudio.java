@@ -49,7 +49,8 @@ public class PGLowLatencyAudio extends CordovaPlugin
 	public static final String PAUSE = "pause";
 	public static final String GET_DURATION = "getDuration";
 	public static final String GET_POSITION = "getPosition";
-	
+	public static final String SET_POSITION = "setPosition";
+
 	public static final int DEFAULT_POLYPHONY_VOICES = 15;
 	
 
@@ -302,6 +303,20 @@ public class PGLowLatencyAudio extends CordovaPlugin
 					return true;
 				}
 					callbackContext.error(ERROR_NO_AUDIOID + " (" + action + ") " + audioID);
+				return false;
+			}
+			else if(SET_POSITION.equals(action))
+			{
+				if(assetMap.containsKey(audioID))
+				{
+					int index = args.getInt(1);
+					int position = args.getInt(2);
+					PGLowLatencyAudioAsset asset = assetMap.get(audioID);
+					asset.setPosition(index, position);
+					callbackContext.success();
+					return true;
+				}
+				callbackContext.error(ERROR_NO_AUDIOID + " (" + action + ") " + audioID);
 				return false;
 			}
 			else if(GET_CAPABILITIES.equals(action))

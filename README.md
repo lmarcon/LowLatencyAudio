@@ -96,6 +96,15 @@ You will also need to include the AudioToolbox library in your XCode project. In
 		detail:	
 				Gets the position of an audio voice - this only works for assets loaded via preloadAudio
 
+	setPosition (ANDROID ONLY): function (id, index, position, success, fail)
+		params: ID - string unique ID for the audio file
+				index - index of a specific audio voice to check
+				position - the position in msec to seek the track to
+				success - success callback function.
+				fail - error/fail callback function
+		detail:	
+				Sets the position of an audio voice - this only works for assets loaded via preloadAudio
+
 	getCapabilities: function (success, fail)
 		params: success - success callback function
 				fail - error/fail callback function
